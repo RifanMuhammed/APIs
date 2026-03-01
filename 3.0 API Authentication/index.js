@@ -6,10 +6,10 @@ const port = 3000;
 const API_URL = "https://secrets-api.appbrewery.com/";
 
 //TODO 1: Fill in your values for the 3 types of auth.
-const yourUsername = "batman";
-const yourPassword = "hello123";
-const yourAPIKey = "8d7f0364-f292-43ce-aaac-29c0e90b2f20";
-const yourBearerToken = "5dee3e43-c072-4aca-8f78-f79043ec382b";
+const yourUsername = "username";
+const yourPassword = "password";
+const yourAPIKey = "apikey";
+const yourBearerToken = "bearerkey";
 
 app.get("/", (req, res) => {
   res.render("index.ejs", { content: "API Response." });
@@ -34,8 +34,8 @@ app.get("/basicAuth", async (req, res) => {
   try{
     const result= await axios.get("https://secrets-api.appbrewery.com/all?page=2",{
       auth:{
-        username:"batman",
-        password:"hello123",
+        username:"username",
+        password:"password",
       },
     })
     res.render("index.ejs",{content: JSON.stringify(result.data)});
@@ -59,7 +59,7 @@ app.get("/basicAuth", async (req, res) => {
 
 app.get("/apiKey",async (req, res) => {
   try{
-    const result=await axios.get("https://secrets-api.appbrewery.com/filter?score=5&apiKey=8d7f0364-f292-43ce-aaac-29c0e90b2f20");
+    const result=await axios.get("https://secrets-api.appbrewery.com/filter?score=5&apiKey=(apikey)");
     res.render("index.ejs",{content:JSON.stringify(result.data)});
 
   }catch(error){
@@ -76,7 +76,7 @@ app.get("/bearerToken", async (req, res) => {
   try{
     const result =await axios.get("https://secrets-api.appbrewery.com/secrets/42",{
       headers:{
-        Authorization:`Bearer 5dee3e43-c072-4aca-8f78-f79043ec382b`
+        Authorization:`Bearer (Bear-token here)`
       },
     })
     res.render("index.ejs",{content: JSON.stringify(result.data)})
